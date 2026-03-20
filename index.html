@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>VIRO Proxies XL | Unblock the Web</title>
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/your-repo/viro-proxies/main/favicon.png">
+    <!-- Bootstrap 5 CDN (lighter, modern) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts: Poppins for a clean look -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 (free icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            cursor: default;
+            padding-top: 76px; /* for fixed navbar */
+        }
+        /* Custom cursor (optional) */
+        body, a, button {
+            cursor: url('https://raw.githubusercontent.com/your-repo/viro-proxies/main/pointer.png'), auto;
+        }
+        a:hover, button:hover {
+            cursor: url('https://raw.githubusercontent.com/your-repo/viro-proxies/main/hand.png'), pointer;
+        }
+        /* Navbar */
+        .navbar {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(100, 100, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            padding: 0.5rem 1rem;
+        }
+        .navbar-brand img {
+            height: 45px;
+            transition: transform 0.2s;
+        }
+        .navbar-brand img:hover {
+            transform: scale(1.05);
+        }
+        .nav-link {
+            color: #cbd5e1 !important;
+            font-weight: 500;
+            transition: 0.2s;
+            margin: 0 0.25rem;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #60a5fa !important;
+            background: rgba(96, 165, 250, 0.1);
+            border-radius: 8px;
+        }
+        /* Header */
+        .hero {
+            text-align: center;
+            padding: 3rem 1rem;
+            background: rgba(0,0,0,0.2);
+            border-bottom: 1px solid rgba(96, 165, 250, 0.2);
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #60a5fa, #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 1rem auto;
+            color: #94a3b8;
+        }
+        .connection-badge {
+            display: inline-block;
+            background: rgba(96, 165, 250, 0.2);
+            backdrop-filter: blur(4px);
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 1rem;
+            border: 1px solid rgba(96, 165, 250, 0.4);
+            margin-top: 1rem;
+        }
+        .connection-badge i {
+            margin-right: 8px;
+            color: #60a5fa;
+        }
+        /* Proxy cards */
+        .proxy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem 1.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .proxy-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            text-align: center;
+            padding: 1.5rem 1rem;
+        }
+        .proxy-card:hover {
+            transform: translateY(-5px);
+            border-color: #60a5fa;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            background: rgba(30, 41, 59, 0.9);
+        }
+        .proxy-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(96, 165, 250, 0.1);
+            border-radius: 50%;
+            font-size: 2rem;
+            color: #60a5fa;
+        }
+        .proxy-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .proxy-card p {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-bottom: 1.5rem;
+        }
+        .btn-proxy {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border: none;
+            padding: 10px 20px;
+            font-weight: 600;
+            border-radius: 40px;
+            transition: 0.2s;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-proxy:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(59,130,246,0.4);
+            color: white;
+        }
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid rgba(96, 165, 250, 0.2);
+            font-size: 0.85rem;
+            color: #64748b;
+            background: rgba(15, 23, 42, 0.8);
+        }
+        .footer a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .proxy-grid { padding: 1rem; gap: 1rem; }
+            .navbar-nav { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="https://raw.githubusercontent.com/your-repo/viro-proxies/main/viro-logo.png" alt="VIRO Proxies XL" height="45">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="gamesites.html">Gamesites</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="proxies.html">Proxies</a></li>
+                    <li class="nav-item"><a class="nav-link" href="other.html">Other</a></li>
+                    <li class="nav-item"><a class="nav-link" href="tools.html">Tools</a></li>
+                    <li class="nav-item"><a class="nav-link" href="settings.html">Settings</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1><i class="fas fa-globe"></i> VIRO Proxies XL</h1>
+        <p>Fast, secure, and unblocked. Access any site with our premium proxy network.</p>
+        <div class="connection-badge">
+            <i class="fas fa-users"></i> <span id="connection-counter">1,284</span> active users
+        </div>
+    </div>
+
+    <!-- Proxy Grid -->
+    <div class="proxy-grid" id="proxyGrid">
+        <!-- Proxies will be loaded dynamically via JS -->
+    </div>
+
+    <div class="footer">
+        <p>© 2025 <strong>VIRO Proxies XL</strong> – Property of VIRO. All rights reserved. | <a href="#">Privacy</a> | <a href="#">Terms</a></p>
+        <p>Powered by <i class="fas fa-shield-alt"></i> advanced tunneling technology</p>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Proxy data – you can easily add/remove or edit URLs and descriptions
+        const proxies = [
+            { name: "KProxy", url: "https://167.114.102.230", icon: "fas fa-server", description: "Fast, reliable proxy with high anonymity" },
+            { name: "CroxyProxy", url: "https://67.207.72.190", icon: "fas fa-cloud", description: "Supports video streaming and HTTPS" },
+            { name: "Holy Unblocker", url: "https://terriblestories.org/", icon: "fas fa-church", description: "Community-driven, robust unblocker" },
+            { name: "Terbium", url: "https://dabfloss.ga/", icon: "fas fa-atom", description: "Lightweight and fast" },
+            { name: "Incognito", url: "https://moist.vercel.app/", icon: "fas fa-user-secret", description: "No logs, complete privacy" },
+            { name: "Nebula", url: "https://neb.searchtheweb.xyz/", icon: "fas fa-star", description: "Modern UI, fast speeds" },
+            { name: "Eclipse", url: "https://eclipse-is.pretty-cool.ml/", icon: "fas fa-moon", description: "Advanced bypass technology" },
+            { name: "Elixir", url: "https://jesus.is-a.win/", icon: "fas fa-flask", description: "Ultra‑secure and reliable" },
+            { name: "Rammerhead", url: "https://schoolookup.ga", icon: "fas fa-head-side-vr", description: "Powerful proxy with WebSocket support" }
+        ];
+
+        // Render proxy cards
+        const grid = document.getElementById('proxyGrid');
+        proxies.forEach(proxy => {
+            const card = document.createElement('div');
+            card.className = 'proxy-card';
+            card.innerHTML = `
+                <div class="proxy-icon"><i class="${proxy.icon}"></i></div>
+                <h3>${proxy.name}</h3>
+                <p>${proxy.description}</p>
+                <a href="${proxy.url}" target="_blank" rel="noopener noreferrer" class="btn-proxy">Launch <i class="fas fa-external-link-alt"></i></a>
+            `;
+            grid.appendChild(card);
+        });
+
+        // Simulate live connection counter (increments every few seconds)
+        let counter = 1284;
+        const counterElem = document.getElementById('connection-counter');
+        setInterval(() => {
+            // random +1 to +5 increase to mimic real traffic
+            counter += Math.floor(Math.random() * 5) + 1;
+            counterElem.textContent = counter.toLocaleString();
+        }, 7000);
+    </script>
+</body>
+</html>
